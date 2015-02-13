@@ -1,0 +1,194 @@
+<html>
+
+	<head>
+		<title>50 tons de cinza</title>
+		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" >
+		<style>
+html, body {
+	height: 100%;
+}
+h2 {
+	margin-top: 20%;
+}
+.map {
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+	display: block;
+}
+.map > div {
+	height: 100%;
+	margin: 0 !important;
+	text-align: center;
+}
+.fill { 
+	min-height: 100%;
+	height: 100%;
+	width: 100%;
+}
+.tom_img{
+	margin-top: 10%;
+}
+.l_color {
+	background-color: #FFF;
+}
+.r_color {
+	background-color: #000;
+}		
+
+		</style>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-59740875-2', 'auto');
+		  ga('send', 'pageview');
+
+		</script>
+	</head>
+
+	<body>
+		<div class="container fill">
+			<div class="row-fluid map">
+				<div class="span1 l_color"></div>
+				<div class="span10" id="movie_here">
+					<h2 class="gray_text">50 Tons de cinza</h2>
+					<img class="tom_img" />
+					<br/><br/>
+					<span class="gray_text" id="tom_name"></span><br/>
+					<span class="gray_text" id="tom_color"></span>
+				</div>
+				<div class="span1 r_color"></div>
+			</div>
+		</div>
+	</body>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript">
+/*
+	imagemagick command:
+	convert hanks0.jpg -colorspace gray hanks_test.jpg
+
+*/
+		function convertAll(){
+			var code = "";
+			for(var i = 0; i < 50; i++){
+				code += "sudo convert " + toms[i] + " -colorspace gray " + toms[i] + "<br/>"; 
+			}
+			$("#movie_here").html(code);
+		}
+		function shuffleToms(){
+			var array = [
+				"blair.jpg",
+				"brady1.jpg",
+				"brady2.jpg",
+				"brady3.jpg",
+				"brady4.jpg",
+				"cat1.jpg",
+				"cat2.jpg",
+				"cat3.jpg",
+				"cat4.jpg",
+				"cat5.jpg",
+				"cruise1.jpg",
+				"cruise2.jpg",
+				"cruise3.jpg",
+				"cruise4.jpg",
+				"cruise5.jpg",
+				"cruise6.jpg",
+				"cruise7.jpg",
+				"cruise8.jpg",
+				"hanks.jpg",
+				"hanks0.jpg",
+				"hanks1.jpg",
+				"hanks2.jpg",
+				"hanks3.jpg",
+				"hanks4.jpg",
+				"hanks5.jpg",
+				"hanks6.jpg",
+				"hanks7.jpg",
+				"hanks8.jpg",
+				"hanks9.jpg",
+				"hardy1.jpg",
+				"hardy2.jpg",
+				"hiddle1.jpg",
+				"hiddle2.jpg",
+				"hiddle3.jpg",
+				"hiddle4.jpg",
+				"hiddle5.jpg",
+				"hiddle6.jpg",
+				"hiddle7.jpg",
+				"lee1.jpg",
+				"lee2.jpg",
+				"lee3.jpg",
+				"ramos.jpg",
+				"selleck1.jpg",
+				"selleck2.jpg",
+				"selleck3.jpg",
+				"selleck4.jpg",
+				"selleck5.jpg",
+				"selleck6.jpg",
+				"stark.jpg",
+				"tornado.jpg"
+			];
+			var currentIndex = array.length, temporaryValue, randomIndex ;
+
+			// While there remain elements to shuffle...
+			while (0 !== currentIndex) {
+				// Pick a remaining element...
+				randomIndex = Math.floor(Math.random() * currentIndex);
+				currentIndex -= 1;
+				// And swap it with the current element.
+				temporaryValue = array[currentIndex];
+				array[currentIndex] = array[randomIndex];
+				array[randomIndex] = temporaryValue;
+			}
+
+			return array;
+		}
+		function getTomByImage(image){
+			var check = image.substr(0,3);
+			switch(check){
+				case "bla": return "Tony Blair";
+				case "bra": return "Tom Brady";
+				case "cat": return "O gato Tom";
+				case "cru": return "Tom Cruise";
+				case "han": return "Tom Hanks";
+				case "har": return "Tom Hardy";
+				case "hid": return "Tom Hiddle";
+				case "lee": return "Tommy Lee Jones";
+				case "ram": return "Tony Ramos";
+				case "sel": return "Tom Selleck";
+				case "sta": return "Tony stark";
+				case "tor": return "Tony Tornado";
+			}
+		}
+
+		var toms = shuffleToms();
+
+		function play(color){
+			if(color > 250){
+				color = 5;	
+			}
+			if(color > 125){
+				$(".gray_text").css("color", "black");
+			} else {
+				$(".gray_text").css("color", "white");
+			}
+			$("#movie_here").css("background-color", "rgb("+color+", "+color+", "+color+")");
+			$("#tom_color").html("rgb("+color+", "+color+", "+color+")");
+			var index = (color/5)-1;
+			var tom = toms[index];
+			$(".tom_img").attr("src", "tom/" + tom);
+			$("#tom_name").html(getTomByImage(tom));
+			color += 5;
+			window.setTimeout(function(){ play(color); }, 1000);
+		}
+		$(document).ready(function(){
+//			convertAll();
+			play(5);
+		});
+	</script>
+
+</html>
